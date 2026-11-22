@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AI 비전 로봇팔 Pick &amp; Place 영상 모음 · 채성주</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+/* layout: one reading column; each clip = video (left) + key points (right), stacked on phones.
+   palette follows the portfolio deck: white ground, blue headings, pale blue panels */
+:root {
+  --bg: #ffffff;
+  --panel: #f3f6fd;
+  --line: #d6dff3;
+  --fg: #1d2b41;
+  --muted: #5a6a85;
+  --accent: #315cde;
+  --good: #23775f;
+  --bad: #c24f3f;
+  --ctrl: #c8741f;
+  --video-bg: #0e1424;
+  --sans: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1522; --panel: #161f31; --line: #26324a; --fg: #e4e9f4; --muted: #9aa8c2;
+    --accent: #7d9bff; --good: #4fc29f; --bad: #f08a78; --ctrl: #f0a65a; --video-bg: #070b14;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1522; --panel: #161f31; --line: #26324a; --fg: #e4e9f4; --muted: #9aa8c2;
+  --accent: #7d9bff; --good: #4fc29f; --bad: #f08a78; --ctrl: #f0a65a; --video-bg: #070b14;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { color-scheme: light dark; }
+body { margin: 0; }
+img, video { max-width: 100%; }
+body {
+  background: var(--bg); color: var(--fg); font-family: var(--sans); font-size: 16px; line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+.wrap {
+  max-width: 1120px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 48px 72px;
+}
+header { display: grid; gap: 14px; padding-bottom: 28px; border-bottom: 2px solid var(--accent); }
+.eyebrow { font-family: var(--mono); font-size: 13px; letter-spacing: .06em; color: var(--accent); font-weight: 600; }
+h1 { margin: 0; font-size: clamp(28px, 4.4vw, 42px); line-height: 1.2; font-weight: 800; text-wrap: balance; }
+.lede { margin: 0; max-width: 62ch; color: var(--muted); }
+.who { font-size: 14px; color: var(--muted); }
+.who b { color: var(--fg); font-weight: 700; }
+
+nav { margin-top: 26px; }
+nav p { margin: 0 0 10px; font-size: 14px; color: var(--muted); }
+.index { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; padding: 0; margin: 0; }
+.index a {
+  display: inline-flex; align-items: baseline; gap: 8px; text-decoration: none; color: var(--fg);
+  border: 1px solid var(--line); border-radius: 999px; padding: 6px 14px; font-size: 14px; background: var(--bg);
+}
+.index a:hover, .index a:focus-visible { border-color: var(--accent); outline: none; }
+.index .n { font-family: var(--mono); font-weight: 600; color: var(--accent); font-variant-numeric: tabular-nums; }
+
+h2.group { margin: 56px 0 6px; font-size: 22px; font-weight: 800; }
+.group-note { margin: 0 0 8px; color: var(--muted); font-size: 15px; }
+
+.clip {
+  display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: 16px 28px;
+  grid-template-areas: "head head" "media text";
+  padding-block: 34px; border-bottom: 1px solid var(--line); scroll-margin-top: 16px;
+}
+.clip:last-of-type { border-bottom: 0; }
+.head { grid-area: head; min-width: 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px; }
+.head .week { margin: 0; flex-basis: 100%; }
+.media { grid-area: media; min-width: 0; }
+.media video {
+  display: block; width: 100%; max-width: 100%; height: auto; border-radius: 10px;
+  background: var(--video-bg);
+}
+.cap { margin: 8px 0 0; font-size: 13px; color: var(--muted); }
+.text { grid-area: text; min-width: 0; display: grid; align-content: start; gap: 12px; }
+.text dl { margin-top: 0; }
+.slide {
+  justify-self: start; font-family: var(--mono); font-size: 13px; font-weight: 600; letter-spacing: .04em;
+  color: #fff; background: var(--accent); border-radius: 6px; padding: 3px 10px;
+}
+:root[data-theme="dark"] .slide { color: #0f1522; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .slide { color: #0f1522; } }
+.slide.extra { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
+:root[data-theme="dark"] .slide.extra { color: var(--accent); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .slide.extra { color: var(--accent); } }
+h3 { margin: 0; font-size: 21px; line-height: 1.35; font-weight: 800; text-wrap: balance; }
+.week { font-size: 14px; color: var(--muted); }
+dl {
+  margin: 4px 0 0; padding: 16px 18px; background: var(--panel); border: 1px solid var(--line);
+  border-radius: 12px; display: grid; gap: 12px;
+}
+dt { font-size: 14px; font-weight: 700; color: var(--accent); }
+dt.good { color: var(--good); } dt.bad { color: var(--bad); } dt.ctrl { color: var(--ctrl); }
+dd { margin: 2px 0 0; font-size: 15px; line-height: 1.6; }
+footer { margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); }
+
+@media (max-width: 760px) {
+  .clip { grid-template-columns: minmax(0, 1fr); grid-template-areas: "head" "media" "text"; gap: 14px; }
+  .wrap { padding-block: 28px 48px; }
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">PORTFOLIO · VIDEO</div>
+    <h1>AI 비전 기반 로봇팔 Pick &amp; Place 영상 모음</h1>
+    <p class="lede">포트폴리오 PDF에 장면 캡처로 실린 영상을 여기서 직접 재생할 수 있습니다. 각 영상의 번호는 PDF의 슬라이드 번호이고, 오른쪽 핵심 포인트는 PDF와 같은 내용입니다.</p>
+    <div class="who"><b>채성주</b> · 캡스톤디자인 2 · 2026.03 ~ 06 · 4인 팀 팀장 · SO-101 · Gemini Robotics(VLM) · IKPy · Raspberry Pi 5</div>
+  </header>
+
+  <nav aria-label="슬라이드별 영상">
+    <p>슬라이드 번호를 누르면 해당 영상으로 이동합니다.</p>
+    <ul class="index">
+      <li><a href="#s12a"><span class="n">12</span>교체 전 그리퍼</a></li>
+      <li><a href="#s12b"><span class="n">12</span>평행 그리퍼 개폐</a></li>
+      <li><a href="#s20a"><span class="n">20</span>리더암 원격조작</a></li>
+      <li><a href="#s20b"><span class="n">20</span>원격조작 · 상자에 넣기</a></li>
+      <li><a href="#s22"><span class="n">22</span>자율 Pick &amp; Place</a></li>
+      <li><a href="#x1"><span class="n">추가</span>모터 · 카메라 연동</a></li>
+      <li><a href="#x2"><span class="n">추가</span>같은 날 다른 실행</a></li>
+    </ul>
+  </nav>
+
+  <h2 class="group">슬라이드 영상</h2>
+  <section class="clip" id="s12a">
+    <div class="head">
+      <span class="slide">슬라이드 12</span>
+      <h3>그리퍼 교체 전: 기본 비대칭 그리퍼로 큐브 집기</h3>
+      <p class="week">2026.06.16 · 교체 전 기록</p>
+    </div>
+    <div class="media">
+      <video src="v/arm04_before_gripper.mp4" poster="p/arm04_before_gripper.jpg" controls muted loop playsinline preload="metadata"></video>
+      <p class="cap">기본 비대칭 그리퍼로 큐브를 집어 드는 장면 · 38초</p>
+    </div>
+    <div class="text">
+      <dl>
+        <div><dt class="bad">구조</dt><dd>한쪽 턱은 고정되고 다른 쪽만 움직여, 물체 중심과 그리퍼 중심이 어긋나기 쉬웠습니다.</dd></div>
+        <div><dt>판단</dt><dd>소프트웨어 보정으로 버티기보다 양쪽이 함께 닫히는 평행 그리퍼로 바꾸기로 했습니다.</dd></div>
+      </dl>
+    </div>
+  </section>
+  <section class="clip" id="s12b">
+    <div class="head">
+      <span class="slide">슬라이드 12</span>
+      <h3>교체한 평행 그리퍼의 개폐 동작</h3>
+      <p class="week">2026.06.20</p>
+    </div>
+    <div class="media">
+      <video src="v/arm05_parallel_gripper.mp4" poster="p/arm05_parallel_gripper.jpg" controls muted loop playsinline preload="metadata" style="max-width:340px"></video>
+      <p class="cap">랙·피니언으로 양쪽 손가락이 함께 열리고 닫히는 장면 · 16초</p>
+    </div>
+    <div class="text">
+      <dl>
+        <div><dt class="good">구조</dt><dd>Robonine SO-ARM100/101 Parallel Gripper 기반으로 출력해 STS3215로 구동했습니다.</dd></div>
+        <div><dt class="good">효과</dt><dd>닫히는 중심이 물체 중심과 맞습니다.</dd></div>
+      </dl>
+    </div>
+  </section>
+  <section class="clip" id="s20a">
+    <div class="head">
+      <span class="slide">슬라이드 20</span>
+      <h3>리더암 원격조작: 물체를 집어 들기</h3>
+      <p class="week">2026.05.31</p>
+    </div>
+    <div class="media">
+      <video src="v/arm02_teleop_grasp.mp4" poster="p/arm02_teleop_grasp.jpg" controls muted loop playsinline preload="metadata"></video>
+      <p class="cap">아래쪽 리더암을 손으로 움직이면 위쪽 작업 팔이 따라 움직입니다 · 26초</p>
+    </div>
+    <div class="text">
+      <dl>
+        <div><dt>구성</dt><dd>왼팔 리더암(ID 11~16)의 각도를 읽어 오른팔 작업 팔(ID 1~6)이 따라 움직이게 했습니다.</dd></div>
+        <div><dt class="ctrl">왜 먼저 했는가</dt><dd>12주차에도 시뮬레이션이 늦어지고 있어, 실물 시험과 데이터 수집을 먼저 진행했습니다.</dd></div>
+      </dl>
+    </div>
+  </section>
+  <section class="clip" id="s20b">
+    <div class="head">
+      <span class="slide">슬라이드 20</span>
+      <h3>리더암 원격조작: 마커를 상자에 넣기</h3>
+      <p class="week">2026.05.31</p>
+    </div>
+    <div class="media">
+      <video src="v/arm03_teleop_marker.mp4" poster="p/arm03_teleop_marker.jpg" controls muted loop playsinline preload="metadata"></video>
+      <p class="cap">마커를 집어 옮긴 뒤 상자에 넣는 장면 · 30초</p>
+    </div>
+    <div class="text">
+      <dl>
+        <div><dt class="good">기록</dt><dd>원격조작 과정을 RGB·깊이·관절값과 함께 녹화해 20회(4,375 프레임)를 모았습니다.</dd></div>
+        <div><dt class="ctrl">참고</dt><dd>이 장면의 그리퍼는 교체 전 기본 그리퍼입니다.</dd></div>
+      </dl>
+    </div>
+  </section>
+  <section class="clip" id="s22">
+    <div class="head">
+      <span class="slide">슬라이드 22</span>
+      <h3>결과: 오른팔 자율 Pick &amp; Place</h3>
+      <p class="week">2026.06.20</p>
+    </div>
+    <div class="media">
+      <video src="v/arm06_auto_pnp_a.mp4" poster="p/arm06_auto_pnp_a.jpg" controls muted loop playsinline preload="metadata"></video>
+      <p class="cap">Gemini Robotics가 찾은 큐브를 집어 박스에 넣는 장면 · 17초</p>
+    </div>
+    <div class="text">
+      <dl>
+        <div><dt class="good">자율 동작</dt><dd>사람이 좌표를 입력하지 않아도 큐브를 집어 박스에 넣었습니다.</dd></div>
+        <div><dt>실행 흐름</dt><dd>촬영·인식 → 좌표 변환 → IKPy → 서보 명령을 한 스크립트로 묶어 실행했습니다.</dd></div>
+        <div><dt class="ctrl">범위</dt><dd>자율 동작은 오른팔 1대 기준입니다.</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <h2 class="group" id="extra">추가 영상</h2>
+  <p class="group-note">분량 때문에 PDF에서는 뺐지만, 관련 내용을 영상으로 확인할 수 있습니다.</p>
+  <section class="clip" id="x1">
+    <div class="head">
+      <span class="slide extra">추가 영상</span>
+      <h3>초기 시험: 모터 · 카메라 연동</h3>
+      <p class="week">2026.05.22</p>
+    </div>
+    <div class="media">
+      <video src="v/arm01_motor_camera.mp4" poster="p/arm01_motor_camera.jpg" controls muted loop playsinline preload="metadata"></video>
+      <p class="cap">노트북의 카메라 화면과 서보 모터를 함께 동작시킨 초기 시험 · 36초</p>
+    </div>
+    <div class="text">
+      <dl>
+        <div><dt>목적</dt><dd>카메라 인식과 서보 구동을 처음으로 한 시스템에서 함께 확인했습니다.</dd></div>
+      </dl>
+    </div>
+  </section>
+  <section class="clip" id="x2">
+    <div class="head">
+      <span class="slide extra">추가 영상</span>
+      <h3>같은 날 다른 실행 기록</h3>
+      <p class="week">2026.06.20</p>
+    </div>
+    <div class="media">
+      <video src="v/arm07_auto_pnp_b.mp4" poster="p/arm07_auto_pnp_b.jpg" controls muted loop playsinline preload="metadata"></video>
+      <p class="cap">최종 시연과 같은 날 촬영한 다른 실행 · 19초</p>
+    </div>
+    <div class="text">
+      <dl>
+        <div><dt>기록</dt><dd>슬라이드 22와 같은 날, 같은 구성으로 촬영한 다른 실행입니다.</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <footer>모든 영상은 실물 촬영 영상이며, 웹용으로 720p로 압축했습니다.</footer>
+</div>
+
+<script>
+(function () {
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var vids = Array.prototype.slice.call(document.querySelectorAll('video'));
+  // only one clip plays at a time
+  vids.forEach(function (v) {
+    v.addEventListener('play', function () {
+      vids.forEach(function (o) { if (o !== v && !o.paused) o.pause(); });
+    });
+  });
+  // a clip opened from the index starts playing (muted) on its own
+  function playHash() {
+    if (reduce) return;
+    var id = location.hash.slice(1);
+    if (!id) return;
+    var sec = document.getElementById(id);
+    var v = sec && sec.querySelector('video');
+    if (v) { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+  }
+  window.addEventListener('hashchange', playHash);
+  playHash();
+})();
+</script>
+
+</body>
+</html>
