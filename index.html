@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>H1 휴머노이드 영상 모음</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+/* layout: one reading column; each clip = video (left) + key points (right), stacked on phones.
+   palette follows the portfolio deck: white ground, blue headings, pale blue panels */
+:root {
+  --bg: #ffffff;
+  --panel: #f3f6fd;
+  --line: #d6dff3;
+  --fg: #1d2b41;
+  --muted: #5a6a85;
+  --accent: #315cde;
+  --good: #23775f;
+  --bad: #c24f3f;
+  --ctrl: #c8741f;
+  --video-bg: #0e1424;
+  --sans: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1522; --panel: #161f31; --line: #26324a; --fg: #e4e9f4; --muted: #9aa8c2;
+    --accent: #7d9bff; --good: #4fc29f; --bad: #f08a78; --ctrl: #f0a65a; --video-bg: #070b14;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1522; --panel: #161f31; --line: #26324a; --fg: #e4e9f4; --muted: #9aa8c2;
+  --accent: #7d9bff; --good: #4fc29f; --bad: #f08a78; --ctrl: #f0a65a; --video-bg: #070b14;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { color-scheme: light dark; }
+body { margin: 0; }
+img, video { max-width: 100%; }
+body {
+  background: var(--bg); color: var(--fg); font-family: var(--sans); font-size: 16px; line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+.wrap {
+  max-width: 1120px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 48px 72px;
+}
+header { display: grid; gap: 14px; padding-bottom: 28px; border-bottom: 2px solid var(--accent); }
+.eyebrow { font-family: var(--mono); font-size: 13px; letter-spacing: .06em; color: var(--accent); font-weight: 600; }
+h1 { margin: 0; font-size: clamp(28px, 4.4vw, 42px); line-height: 1.2; font-weight: 800; text-wrap: balance; }
+.lede { margin: 0; max-width: 62ch; color: var(--muted); }
+.who { font-size: 14px; color: var(--muted); }
+.who b { color: var(--fg); font-weight: 700; }
+
+nav { margin-top: 26px; }
+nav p { margin: 0 0 10px; font-size: 14px; color: var(--muted); }
+.index { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; padding: 0; margin: 0; }
+.index a {
+  display: inline-flex; align-items: baseline; gap: 8px; text-decoration: none; color: var(--fg);
+  border: 1px solid var(--line); border-radius: 999px; padding: 6px 14px; font-size: 14px; background: var(--bg);
+}
+.index a:hover, .index a:focus-visible { border-color: var(--accent); outline: none; }
+.index .n { font-family: var(--mono); font-weight: 600; color: var(--accent); font-variant-numeric: tabular-nums; }
+
+h2.group { margin: 56px 0 6px; font-size: 22px; font-weight: 800; }
+.group-note { margin: 0 0 8px; color: var(--muted); font-size: 15px; }
+
+.clip {
+  display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: 16px 28px;
+  grid-template-areas: "head head" "media text";
+  padding-block: 34px; border-bottom: 1px solid var(--line); scroll-margin-top: 16px;
+}
+.clip:last-of-type { border-bottom: 0; }
+.head { grid-area: head; min-width: 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px; }
+.head .week { margin: 0; flex-basis: 100%; }
+.media { grid-area: media; min-width: 0; }
+.media video {
+  display: block; width: 100%; max-width: 100%; height: auto; border-radius: 10px;
+  background: var(--video-bg);
+}
+.cap { margin: 8px 0 0; font-size: 13px; color: var(--muted); }
+.text { grid-area: text; min-width: 0; display: grid; align-content: start; gap: 12px; }
+.text dl { margin-top: 0; }
+.slide {
+  justify-self: start; font-family: var(--mono); font-size: 13px; font-weight: 600; letter-spacing: .04em;
+  color: #fff; background: var(--accent); border-radius: 6px; padding: 3px 10px;
+}
+:root[data-theme="dark"] .slide { color: #0f1522; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .slide { color: #0f1522; } }
+.slide.extra { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
+:root[data-theme="dark"] .slide.extra { color: var(--accent); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .slide.extra { color: var(--accent); } }
+h3 { margin: 0; font-size: 21px; line-height: 1.35; font-weight: 800; text-wrap: balance; }
+.week { font-size: 14px; color: var(--muted); }
+dl {
+  margin: 4px 0 0; padding: 16px 18px; background: var(--panel); border: 1px solid var(--line);
+  border-radius: 12px; display: grid; gap: 12px;
+}
+dt { font-size: 14px; font-weight: 700; color: var(--accent); }
+dt.good { color: var(--good); } dt.bad { color: var(--bad); } dt.ctrl { color: var(--ctrl); }
+dd { margin: 2px 0 0; font-size: 15px; line-height: 1.6; }
+footer { margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); }
+
+@media (max-width: 760px) {
+  .clip { grid-template-columns: minmax(0, 1fr); grid-template-areas: "head" "media" "text"; gap: 14px; }
+  .wrap { padding-block: 28px 48px; }
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">PORTFOLIO · VIDEO</div>
+    <h1>H1 휴머노이드 시뮬레이션 · 강화학습 프로젝트 영상 모음</h1>
+    <p class="lede">포트폴리오 PDF에 장면 캡처로 실린 영상을 여기서 직접 재생할 수 있습니다. 각 영상의 번호는 PDF의 슬라이드 번호이고, 오른쪽 핵심 포인트는 PDF와 같은 내용입니다.</p>
+    <div class="who"><b>채성주</b> · 2026.09 ~ 11 · Unitree H1 / H1_2 · ROS 2 · Gazebo · MuJoCo</div>
+  </header>
+
+  <nav aria-label="슬라이드별 영상">
+    <p>슬라이드 번호를 누르면 해당 영상으로 이동합니다.</p>
+    <ul class="index">
+      <li><a href="#s6"><span class="n">6</span>Gazebo 관절 제어</a></li>
+      <li><a href="#s10"><span class="n">10</span>Gemini Robotics-ER 자율 보행</a></li>
+      <li><a href="#s12"><span class="n">12</span>직접 고친 정책의 실패</a></li>
+      <li><a href="#s15"><span class="n">15</span>공식 학습 환경</a></li>
+      <li><a href="#s16"><span class="n">16</span>학습 횟수별 8° 경사</a></li>
+      <li><a href="#s22"><span class="n">22</span>12° 경사 비교</a></li>
+      <li><a href="#s24"><span class="n">24</span>사람 계단 동작 변환</a></li>
+      <li><a href="#x1"><span class="n">추가 · 11</span>평가 환경 재시험</a></li>
+      <li><a href="#x2"><span class="n">추가 · 16·17</span>4만 회 vs 1만 회</a></li>
+      <li><a href="#x3"><span class="n">추가 · 20·21</span>진척 보상 vs 대조군</a></li>
+    </ul>
+  </nav>
+
+  <h2 class="group">슬라이드 영상</h2>
+
+  <section class="clip" id="s6">
+    <div class="head">
+      <span class="slide">슬라이드 6</span>
+      <h3>① 개발 환경 구축: Gazebo 속 H1 관절 제어</h3>
+      <p class="week">3 ~ 4주차</p>
+    </div>
+    <div class="media">
+      <video src="v/w04_s07_.mp4" poster="p/w04_s07_.jpg" controls muted loop playsinline preload="metadata"></video>
+      <p class="cap">ROS 2 토픽 명령으로 H1 관절 제어 · Gazebo Harmonic · 22초</p>
+    </div>
+    <div class="text">
+      <dl>
+        <div><dt>구성</dt><dd>Windows 11 · WSL2(Ubuntu 24.04) · ROS 2 Jazzy · Gazebo Harmonic · Unitree H1 모델</dd></div>
+        <div><dt>명령 경로</dt><dd>ROS 2 토픽 → ros_gz_bridge → Gazebo 관절</dd></div>
+        <div><dt class="good">확인</dt><dd>명령을 보낸 관절만 목표 각도로 움직였습니다.</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="clip" id="s10">
+    <div class="head">
+      <span class="slide">슬라이드 10</span>
+      <h3>④ Gemini Robotics-ER 기반 목표 탐색 · 자율 보행</h3>
+      <p class="week">10주차</p>
+    </div>
+    <div class="media">
+      <video src="v/w10_s17_.mp4" poster="p/w10_s17_.jpg" controls muted loop playsinline preload="metadata"></video>
+      <p class="cap">왼쪽: 바깥 시점 · 오른쪽: 로봇 머리 카메라 시점 · 19초</p>
+    </div>
+    <div class="text">
+      <dl>
+        <div><dt>판단</dt><dd>로봇용 시각 · 언어 모델(VLM) Gemini Robotics-ER이 카메라 영상에서 왼쪽 35°, 4.5m 떨어진 주황 기둥을 찾습니다.</dd></div>
+        <div><dt>행동</dt><dd>ROS 2 속도 명령으로 Unitree 공식 보행 정책이 걸어갑니다.</dd></div>
+        <div><dt class="good">결과</dt><dd>사람의 조종 없이 기둥 약 1m 앞에서 스스로 정지했습니다.</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="clip" id="s12">
+    <div class="head">
+      <span class="slide">슬라이드 12</span>
+      <h3>⑤ 직접 고친 정책의 실패 장면: 12° 경사</h3>
+      <p class="week">11주차</p>
+    </div>
+    <div class="media">
+      <video src="v/w11_s07_.mp4" poster="p/w11_s07_.jpg" controls muted loop playsinline preload="metadata"></video>
+      <p class="cap">12° 경사 · 왼쪽 학습 전 / 오른쪽 27관절 정책 · 10초</p>
+    </div>
+    <div class="text">
+      <dl>
+        <div><dt class="bad">왼쪽</dt><dd>학습 전 보행 예제는 2.9초에 넘어집니다.</dd></div>
+        <div><dt class="bad">오른쪽</dt><dd>직접 고친 보상으로 학습한 27관절 정책은 오르지 못하고 3.4m 밀려 내려옵니다.</dd></div>
+        <div><dt>결론</dt><dd>버티기만 늘고 오르지는 못했습니다. 이후 원인 분석과 공식 설정 재현으로 이어졌습니다.</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="clip" id="s15">
+    <div class="head">
+      <span class="slide">슬라이드 15</span>
+      <h3>⑥ 공식 학습 환경: 여러 지형 위에서 동시에 시행착오</h3>
+      <p class="week">12주차</p>
+    </div>
+    <div class="media">
+      <video src="v/7bc3829f.mp4" poster="p/7bc3829f.jpg" controls muted loop playsinline preload="metadata"></video>
+      <p class="cap">학습 초기: 지형마다 로봇이 넘어지고 다시 시작</p>
+    </div>
+    <div class="text">
+      <dl>
+        <div><dt>지형</dt><dd>계단 · 경사 · 거친 바닥 · 물결 지형이 10단계 난이도로 깔린 맵입니다.</dd></div>
+        <div><dt>커리큘럼</dt><dd>잘 걸으면 더 어려운 지형으로, 넘어지면 쉬운 지형으로 옮겨 갑니다.</dd></div>
+        <div><dt>재현</dt><dd>1,024대를 동시에 40,000회 학습해 공식 경험량의 99.99%를 맞췄습니다.</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="clip" id="s16">
+    <div class="head">
+      <span class="slide">슬라이드 16</span>
+      <h3>⑥ 학습 횟수별 걸음 비교: 8° 경사</h3>
+      <p class="week">12주차 · 하나의 학습을 시점별로 저장해 같은 조건(전진 0.5m/s)으로 시험</p>
+    </div>
+    <div class="media">
+      <video src="v/e93604c1.mp4" poster="p/e93604c1.jpg" controls muted loop playsinline preload="metadata"></video>
+      <p class="cap">8° 경사 · 같은 학습의 1만 · 2만 · 3만 · 4만 회 시점 (왼쪽 위부터) · 15초</p>
+    </div>
+    <div class="text">
+      <dl>
+        <div><dt>1만 회</dt><dd>경사 앞에서 거의 멈춥니다.</dd></div>
+        <div><dt class="good">2만 · 3만 회</dt><dd>경사를 꾸준히 오릅니다.</dd></div>
+        <div><dt class="bad">4만 회</dt><dd>무릎을 굽힌 채 제자리걸음을 합니다.</dd></div>
+        <div><dt class="ctrl">공통점</dt><dd>1만 ~ 4만 회 모두 공통적으로 옆걸음으로 움직이는 것을 확인했습니다. 13주차 "선 따라가기 보상"의 출발점입니다.</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="clip" id="s22">
+    <div class="head">
+      <span class="slide">슬라이드 22</span>
+      <h3>⑦ 12° 경사 비교: 보상 1개로 바뀐 행동</h3>
+      <p class="week">12주차 · 파란 면이 12° 경사</p>
+    </div>
+    <div class="media">
+      <video src="v/w12_s09_.mp4" poster="p/w12_s09_.jpg" controls muted loop playsinline preload="metadata"></video>
+      <p class="cap">왼쪽: 진척 보상 37,000회 · 오른쪽: 공식 36,000회 · 같은 출발 조건 · 10초</p>
+    </div>
+    <div class="text">
+      <dl>
+        <div><dt class="good">왼쪽</dt><dd>진척 보상 정책은 경사에 올라선 뒤 계속 전진합니다.</dd></div>
+        <div><dt class="bad">오른쪽</dt><dd>공식 정책은 입구에서 멈춘 뒤 뒤로 밀립니다.</dd></div>
+        <div><dt>차이</dt><dd>공식 보상 16개는 그대로 두고 "전진 진척" 보상 1개만 추가했습니다.</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="clip" id="s24">
+    <div class="head">
+      <span class="slide">슬라이드 24</span>
+      <h3>⑧ 사람의 계단 동작을 H1_2 몸에 옮기기</h3>
+      <p class="week">13주차 · 모션캡처 → GMR 리타게팅 → H1_2 27관절</p>
+    </div>
+    <div class="media">
+      <video src="v/w13_m2_r.mp4" poster="p/w13_m2_r.jpg" controls muted loop playsinline preload="metadata"></video>
+      <p class="cap">사람 계단 동작(AMASS · KIT)을 H1_2로 변환 · 단 높이 20.4cm</p>
+    </div>
+    <div class="text">
+      <dl>
+        <div><dt class="good">무릎</dt><dd>20cm 단을 넘기려고 높이 들어 올립니다.</dd></div>
+        <div><dt class="good">상체</dt><dd>오를 때 앞으로 숙여 무게중심을 옮깁니다.</dd></div>
+        <div><dt class="ctrl">주의</dt><dd>변환한 "기준 동작"의 재생입니다. 학습은 이 동작을 물리 시뮬레이션 안에서 따라 하게 만드는 과정입니다.</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <h2 class="group" id="extra">추가 영상</h2>
+  <p class="group-note">분량 때문에 PDF에서는 뺐지만, 관련 슬라이드의 내용을 영상으로 확인할 수 있습니다.</p>
+
+  <section class="clip" id="x1">
+    <div class="head">
+      <span class="slide extra">관련 슬라이드 11</span>
+      <h3>⑤ 평가 환경을 고친 뒤 다시 시험</h3>
+      <p class="week">11주차</p>
+    </div>
+    <div class="media">
+      <video src="v/784b9a5a.mp4" poster="p/784b9a5a.jpg" controls muted loop playsinline preload="metadata"></video>
+      <p class="cap">평지 3m 접근 → 12° 경사 진입 · 왼쪽 보행 예제 / 오른쪽 27관절 정책 · 10초</p>
+    </div>
+    <div class="text">
+      <dl>
+        <div><dt>변경</dt><dd>경사 위에서 바로 시작하던 시험을 평지 3m를 걸어 경사로 들어가는 구조로 바꿨습니다.</dd></div>
+        <div><dt class="bad">결과</dt><dd>왼쪽은 경사 입구에서 정체, 오른쪽은 경사에 들어간 뒤 약 6.8초에 넘어집니다.</dd></div>
+        <div><dt>결정</dt><dd>시험 환경 문제는 해결했지만 실패는 그대로여서, 공식 학습 설정을 처음부터 재현하기로 했습니다.</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="clip" id="x2">
+    <div class="head">
+      <span class="slide extra">관련 슬라이드 16 · 17</span>
+      <h3>⑦ 4만 회 시점: 넘어지지 않지만 앞으로 가지 않는 문제</h3>
+      <p class="week">12주차</p>
+    </div>
+    <div class="media">
+      <video src="v/584846c1.mp4" poster="p/584846c1.jpg" controls muted loop playsinline preload="metadata"></video>
+      <p class="cap">12° 경사 · 왼쪽 4만 회 / 오른쪽 1만 회 · 같은 시각, 같은 카메라 · 10초</p>
+    </div>
+    <div class="text">
+      <dl>
+        <div><dt class="bad">왼쪽</dt><dd>경사 입구 앞에서 제자리걸음을 하고 진입하지 못합니다.</dd></div>
+        <div><dt>원인</dt><dd>공식 보상은 제자리에 서 있어도 속도 점수의 37%를 줍니다. 넘어지면 -200이라 어려운 지형 앞에서는 멈추는 쪽이 점수상 안전합니다.</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="clip" id="x3">
+    <div class="head">
+      <span class="slide extra">관련 슬라이드 20 · 21</span>
+      <h3>⑦ 대조군과 비교: 보상 덕분인가, 더 학습해서인가</h3>
+      <p class="week">12주차 · 대조군은 진척 보상 없이 같은 횟수만큼 더 학습</p>
+    </div>
+    <div class="media">
+      <video src="v/4a5e1603.mp4" poster="p/4a5e1603.jpg" controls muted loop playsinline preload="metadata"></video>
+      <p class="cap">12° 경사 · 왼쪽 진척 보상 37,000회 / 오른쪽 대조군 최고 43,000회 · 10초</p>
+    </div>
+    <div class="text">
+      <dl>
+        <div><dt class="ctrl">오른쪽</dt><dd>대조군도 경사를 오르기 시작합니다.</dd></div>
+        <div><dt class="good">왼쪽</dt><dd>진척 보상 쪽이 더 빠르고 더 멀리 갑니다. 평지 속도 0.52 vs 0.28m/s입니다.</dd></div>
+        <div><dt class="bad">대가</dt><dd>진척 보상 쪽 낙상 비율이 1.5%에서 19%로 늘었습니다.</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <footer>사람 동작 데이터: AMASS (KIT) · 학습: unitree_rl_mjlab (mjlab 1.2.0, MuJoCo Warp, rsl_rl PPO) · 모든 영상은 시뮬레이션 화면입니다.</footer>
+</div>
+
+<script>
+(function () {
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var vids = Array.prototype.slice.call(document.querySelectorAll('video'));
+  // only one clip plays at a time
+  vids.forEach(function (v) {
+    v.addEventListener('play', function () {
+      vids.forEach(function (o) { if (o !== v && !o.paused) o.pause(); });
+    });
+  });
+  // a clip opened from the index starts playing (muted) on its own
+  function playHash() {
+    if (reduce) return;
+    var id = location.hash.slice(1);
+    if (!id) return;
+    var sec = document.getElementById(id);
+    var v = sec && sec.querySelector('video');
+    if (v) { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+  }
+  window.addEventListener('hashchange', playHash);
+  playHash();
+})();
+</script>
+
+</body>
+</html>
