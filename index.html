@@ -333,7 +333,147 @@ footer { margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--line);
     </div>
   </section>
 
-  <footer>사람 동작 데이터: AMASS (KIT) · 학습: unitree_rl_mjlab (mjlab 1.2.0, MuJoCo Warp, rsl_rl PPO) · 모든 영상은 시뮬레이션 화면입니다.</footer>
+
+  <!-- ===== AI 비전 로봇팔 Pick & Place (캡스톤디자인 2) ===== -->
+  <h2 class="group" id="arm" style="margin-top:88px;padding-top:28px;border-top:2px solid var(--accent)">로봇팔: AI 비전 기반 Pick &amp; Place</h2>
+  <p class="group-note">캡스톤디자인 2 · 2026.03 ~ 06 · 4인 팀 팀장 · SO-101 로봇팔 · Gemini Robotics(VLM) · IKPy · Raspberry Pi 5. 로봇팔 포트폴리오 PDF에 장면 캡처로 실린 영상입니다. 번호는 로봇팔 PDF의 슬라이드 번호이며, 모두 실물 촬영 영상입니다.</p>
+  <ul class="index" style="margin-top:14px">
+    <li><a href="#arm-s12a"><span class="n">12</span>교체 전 그리퍼</a></li>
+    <li><a href="#arm-s12b"><span class="n">12</span>평행 그리퍼 개폐</a></li>
+    <li><a href="#arm-s20a"><span class="n">20</span>리더암 원격조작</a></li>
+    <li><a href="#arm-s20b"><span class="n">20</span>원격조작 · 상자에 넣기</a></li>
+    <li><a href="#arm-s22"><span class="n">22</span>자율 Pick &amp; Place</a></li>
+    <li><a href="#arm-s23"><span class="n">23</span>배치를 바꿔 다시 실행</a></li>
+    <li><a href="#arm-x1"><span class="n">추가</span>모터 · 카메라 연동</a></li>
+  </ul>
+
+  <section class="clip" id="arm-s12a">
+    <div class="head">
+      <span class="slide">슬라이드 12</span>
+      <h3>그리퍼 교체 전: 기본 비대칭 그리퍼로 큐브 집기</h3>
+      <p class="week">2026.06.16 · 교체 전 기록</p>
+    </div>
+    <div class="media">
+      <video src="arm/v/arm04_before_gripper.mp4" poster="arm/p/arm04_before_gripper.jpg" controls muted loop playsinline preload="metadata"></video>
+      <p class="cap">기본 비대칭 그리퍼로 큐브를 집어 드는 장면 · 38초</p>
+    </div>
+    <div class="text">
+      <dl>
+        <div><dt class="bad">구조</dt><dd>한쪽 턱은 고정되고 다른 쪽만 움직여, 물체 중심과 그리퍼 중심이 어긋나기 쉬웠습니다.</dd></div>
+        <div><dt>판단</dt><dd>소프트웨어 보정으로 버티기보다 양쪽이 함께 닫히는 평행 그리퍼로 바꾸기로 했습니다.</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="clip" id="arm-s12b">
+    <div class="head">
+      <span class="slide">슬라이드 12</span>
+      <h3>교체한 평행 그리퍼의 개폐 동작</h3>
+      <p class="week">2026.06.20</p>
+    </div>
+    <div class="media">
+      <video src="arm/v/arm05_parallel_gripper.mp4" poster="arm/p/arm05_parallel_gripper.jpg" controls muted loop playsinline preload="metadata" style="max-width:340px"></video>
+      <p class="cap">랙·피니언으로 양쪽 손가락이 함께 열리고 닫히는 장면 · 16초</p>
+    </div>
+    <div class="text">
+      <dl>
+        <div><dt class="good">구조</dt><dd>Robonine SO-ARM100/101 Parallel Gripper 기반으로 출력해 STS3215로 구동했습니다.</dd></div>
+        <div><dt class="good">효과</dt><dd>닫히는 중심이 물체 중심과 맞습니다.</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="clip" id="arm-s20a">
+    <div class="head">
+      <span class="slide">슬라이드 20</span>
+      <h3>리더암 원격조작: 물체를 집어 들기</h3>
+      <p class="week">2026.05.31</p>
+    </div>
+    <div class="media">
+      <video src="arm/v/arm02_teleop_grasp.mp4" poster="arm/p/arm02_teleop_grasp.jpg" controls muted loop playsinline preload="metadata"></video>
+      <p class="cap">아래쪽 리더암을 손으로 움직이면 위쪽 작업 팔이 따라 움직입니다 · 26초</p>
+    </div>
+    <div class="text">
+      <dl>
+        <div><dt>구성</dt><dd>왼팔 리더암(ID 11~16)의 각도를 읽어 오른팔 작업 팔(ID 1~6)이 따라 움직이게 했습니다.</dd></div>
+        <div><dt class="ctrl">왜 먼저 했는가</dt><dd>9주차에 시뮬레이션이 늦어져, 실물 시험과 데이터 수집을 앞당겼습니다.</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="clip" id="arm-s20b">
+    <div class="head">
+      <span class="slide">슬라이드 20</span>
+      <h3>리더암 원격조작: 마커를 상자에 넣기</h3>
+      <p class="week">2026.05.31</p>
+    </div>
+    <div class="media">
+      <video src="arm/v/arm03_teleop_marker.mp4" poster="arm/p/arm03_teleop_marker.jpg" controls muted loop playsinline preload="metadata"></video>
+      <p class="cap">마커를 집어 옮긴 뒤 상자에 넣는 장면 · 30초</p>
+    </div>
+    <div class="text">
+      <dl>
+        <div><dt class="good">기록</dt><dd>원격조작 과정을 RGB·깊이·관절값과 함께 녹화해 20회(4,375 프레임)를 모았습니다.</dd></div>
+        <div><dt class="ctrl">참고</dt><dd>이 장면의 그리퍼는 교체 전 기본 그리퍼입니다.</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="clip" id="arm-s22">
+    <div class="head">
+      <span class="slide">슬라이드 22</span>
+      <h3>결과: 오른팔 자율 Pick &amp; Place</h3>
+      <p class="week">2026.06.20</p>
+    </div>
+    <div class="media">
+      <video src="arm/v/arm06_auto_pnp_a.mp4" poster="arm/p/arm06_auto_pnp_a.jpg" controls muted loop playsinline preload="metadata"></video>
+      <p class="cap">Gemini Robotics가 찾은 큐브를 집어 박스에 넣는 장면 · 17초</p>
+    </div>
+    <div class="text">
+      <dl>
+        <div><dt class="good">자율 동작</dt><dd>사람이 좌표를 입력하지 않아도 큐브를 집어 박스에 넣었습니다.</dd></div>
+        <div><dt>실행 흐름</dt><dd>촬영·인식 → 좌표 변환 → IKPy → 서보 명령을 한 스크립트로 묶어 실행했습니다.</dd></div>
+        <div><dt class="ctrl">범위</dt><dd>자율 동작은 오른팔 1대 기준입니다.</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="clip" id="arm-s23">
+    <div class="head">
+      <span class="slide">슬라이드 23</span>
+      <h3>결과: 배치를 바꿔 다시 실행</h3>
+      <p class="week">2026.06.20</p>
+    </div>
+    <div class="media">
+      <video src="arm/v/arm07_auto_pnp_b.mp4" poster="arm/p/arm07_auto_pnp_b.jpg" controls muted loop playsinline preload="metadata"></video>
+      <p class="cap">큐브와 박스 배치를 바꾼 시연 · 19초</p>
+    </div>
+    <div class="text">
+      <dl>
+        <div><dt class="good">다시 인식</dt><dd>실행마다 새로 촬영·인식하므로, 큐브 위치를 바꾼 뒤에도 새 위치로 파지했습니다.</dd></div>
+        <div><dt>검증 순서</dt><dd>MATLAB IK·토크 해석과 Unity 시뮬레이션으로 먼저 확인한 뒤 실물에 적용했습니다.</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="clip" id="arm-x1">
+    <div class="head">
+      <span class="slide extra">추가 영상</span>
+      <h3>초기 시험: 모터 · 카메라 연동</h3>
+      <p class="week">2026.05.22</p>
+    </div>
+    <div class="media">
+      <video src="arm/v/arm01_motor_camera.mp4" poster="arm/p/arm01_motor_camera.jpg" controls muted loop playsinline preload="metadata"></video>
+      <p class="cap">노트북의 카메라 화면과 서보 모터를 함께 동작시킨 초기 시험 · 36초</p>
+    </div>
+    <div class="text">
+      <dl>
+        <div><dt>목적</dt><dd>카메라 인식과 서보 구동을 처음으로 한 시스템에서 함께 확인했습니다.</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <footer>휴머노이드 · 사람 동작 데이터: AMASS (KIT) · 학습: unitree_rl_mjlab (mjlab 1.2.0, MuJoCo Warp, rsl_rl PPO) · 휴머노이드 영상은 모두 시뮬레이션 화면입니다. 로봇팔 영상은 모두 실물 촬영 영상입니다.</footer>
 </div>
 
 <script>
